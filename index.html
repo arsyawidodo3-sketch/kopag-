@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Cita-Citaku & Vision Board</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons (Vanilla) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen transition-colors duration-300 flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                        <i data-lucide="rocket" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">Cita-Citaku</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Rancang & Wujudkan Masa Depanmu</p>
+                    </div>
+                </div>
+
+                <!-- Dark Mode & Actions -->
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i data-lucide="moon" id="themeIcon" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="openModal('dreamModal')" class="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl font-medium text-sm shadow-lg shadow-blue-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Tambah Impian</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Hero Motivational Section -->
+        <section class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white p-8 sm:p-10 shadow-2xl">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute right-40 -top-10 w-48 h-48 bg-purple-400/20 rounded-full blur-xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-2xl space-y-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold tracking-wide uppercase border border-white/20">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i> Motivasi Hari Ini
+                </span>
+                <h2 id="quoteText" class="text-2xl sm:text-3xl font-extrabold leading-snug">"Masa depan milik mereka yang percaya pada keindahan impian mereka."</h2>
+                <p id="quoteAuthor" class="text-blue-100 font-medium text-sm sm:text-base">— Eleanor Roosevelt</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Statistics -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="glass-card rounded-2xl p-5 flex items-center space-x-4 shadow-sm hover:shadow-md transition">
+                <div class="p-3.5 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
+                    <i data-lucide="target" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Impian</p>
+                    <h3 id="statTotal" class="text-2xl font-bold mt-0.5">0</h3>
+                </div>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-5 flex items-center space-x-4 shadow-sm hover:shadow-md transition">
+                <div class="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400">
+                    <i data-lucide="check-circle" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tercapai</p>
+                    <h3 id="statCompleted" class="text-2xl font-bold mt-0.5">0</h3>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 flex items-center space-x-4 shadow-sm hover:shadow-md transition">
+                <div class="p-3.5 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
+                    <i data-lucide="clock" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dalam Proses</p>
+                    <h3 id="statInProgress" class="text-2xl font-bold mt-0.5">0</h3>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 flex items-center space-x-4 shadow-sm hover:shadow-md transition">
+                <div class="p-3.5 rounded-xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400">
+                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Langkah Selesai</p>
+                    <h3 id="statSteps" class="text-2xl font-bold mt-0.5">0</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter & Search Bar -->
+        <section class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-700">
+            <!-- Filter Tabs -->
+            <div class="flex items-center space-x-1 w-full sm:w-auto overflow-x-auto custom-scrollbar pb-2 sm:pb-0">
+                <button onclick="setFilter('all')" id="filter-all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-semibold transition bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 whitespace-nowrap">Semua Impian</button>
+                <button onclick="setFilter('Karir')" id="filter-Karir" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition whitespace-nowrap">Karir & Profesi</button>
+                <button onclick="setFilter('Pendidikan')" id="filter-Pendidikan" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition whitespace-nowrap">Pendidikan</button>
+                <button onclick="setFilter('Keterampilan')" id="filter-Keterampilan" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition whitespace-nowrap">Skill & Hobi</button>
+                <button onclick="setFilter('Gaya Hidup')" id="filter-Gaya Hidup" class="filter-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition whitespace-nowrap">Gaya Hidup</button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative w-full sm:w-64">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="searchInput" oninput="renderDreams()" placeholder="Cari cita-cita..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            </div>
+        </section>
+
+        <!-- Dreams Grid Section -->
+        <section id="dreamsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Content Will Be Injected Here -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 px-4 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+                <i data-lucide="compass" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">Belum ada cita-cita yang ditambahkan</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm max-w-sm mx-auto mt-1 mb-6">Mulailah merancang masa depanmu sekarang dengan menambahkan impian pertamamu.</p>
+            <button onclick="openModal('dreamModal')" class="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>Tambah Impian Sekarang</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal: Add / Edit Dream -->
+    <div id="dreamModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-lg bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transform transition-all">
+            
+            <!-- Modal Header -->
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                <h3 id="modalTitle" class="text-lg font-bold text-slate-800 dark:text-slate-100">Tambah Cita-Cita Baru</h3>
+                <button onclick="closeModal('dreamModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg p-1 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="dreamForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4">
+                <input type="hidden" id="dreamId">
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Nama Cita-Cita / Impian</label>
+                    <input type="text" id="dreamTitle" required placeholder="Contoh: Menjadi Senior Software Engineer" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Kategori</label>
+                        <select id="dreamCategory" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            <option value="Karir">Karir & Profesi</option>
+                            <option value="Pendidikan">Pendidikan</option>
+                            <option value="Keterampilan">Skill & Hobi</option>
+                            <option value="Gaya Hidup">Gaya Hidup & Finansial</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Target Tahun</label>
+                        <input type="number" id="dreamTargetYear" min="2024" max="2100" required placeholder="2026" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">URL Gambar / Sampul (Opsional)</label>
+                    <input type="url" id="dreamImage" placeholder="https://images.unsplash.com/photo-..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Alasan / Deskripsi Singkat</label>
+                    <textarea id="dreamDescription" rows="3" placeholder="Mengapa impian ini penting bagimu?" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Langkah Aksi Initial (Pisahkan dengan koma)</label>
+                    <input type="text" id="dreamSteps" placeholder="Riset materi, Belajar 1 jam/hari, Ikut sertifikasi" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100 dark:border-slate-700/60">
+                    <button type="button" onclick="closeModal('dreamModal')" class="px-5 py-2.5 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/25 transition">Simpan Impian</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 ease-in-out bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 pointer-events-none">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 dark:text-emerald-600"></i>
+        <span id="toastMessage" class="text-sm font-medium">Berhasil disimpan!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Rancang masa depanmu dengan penuh keyakinan. &copy; Jurnal Cita-Citaku</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Quotes Data
+        const quotes = [
+            { text: "Masa depan milik mereka yang percaya pada keindahan impian mereka.", author: "Eleanor Roosevelt" },
+            { text: "Jangan pernah menyerah pada impian hanya karena waktu yang dibutuhkan untuk mencapainya.", author: "Earl Nightingale" },
+            { text: "Cara terbaik untuk memprediksi masa depan adalah dengan meciptakannya.", author: "Abraham Lincoln" },
